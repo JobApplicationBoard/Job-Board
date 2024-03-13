@@ -1,10 +1,10 @@
 // Import modules necessary for tests
 import React from "react";
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'
 
 // Import component & redux store
 import Login from "../client/components/Login";
-import store from "../client/store";
 
 describe('Unit testing Login component', () => {
 
@@ -12,23 +12,25 @@ describe('Unit testing Login component', () => {
     let form;
 
     // render the component
-    beforeAll(() => {
+    beforeEach(() => {
       form = render(<Login />);
     })
     
     it('Has two input fields username & password', () => {
-      expect(form.getByPlaceholder('username').toBeTruthy());
-      expect(form.getByPlaceholder('password').toBeTruthy());
-      expect(form.getByPlaceholder('hello').toBeTruthy());
+      expect(form.queryByPlaceholderText('username')).toBeInTheDocument();
+      expect(form.queryByPlaceholderText('password')).toBeInTheDocument();
     });
 
     it('Input fields have labels', () => {
-
+      let usernameInput = form.queryByPlaceholderText('username');
+      let passwordInput = form.queryByPlaceholderText('password');
+      expect(form.getByText(/Username:/)).toContainElement(usernameInput);
+      expect(form.getByText(/Password:/)).toContainElement(passwordInput);
     });
 
     // has a button that says log in
     it('Has a button that says Log In', () => {
-
+      expect(form.getByRole('button')).toHaveTextContent('Log In');
     });
   })
 
