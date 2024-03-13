@@ -1,8 +1,4 @@
 /**
- * @jest-environment jsdom
- */
-
-/**
  * ************************************
  *
  * @author Evan Griffith
