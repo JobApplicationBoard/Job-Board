@@ -6,8 +6,14 @@ const Login = () => {
   return (
     <div>
       <form>
-        <input placeholder="username"></input>
-        <input placeholder="password"></input>
+        <label>
+          Username: <input id="usernameInput" placeholder="username"></input>
+        </label>
+
+        <label>
+          Password:<input id="passwordInput" placeholder="password"></input>
+        </label>
+
         <button type="submit">Log In</button>
       </form>
     </div>
