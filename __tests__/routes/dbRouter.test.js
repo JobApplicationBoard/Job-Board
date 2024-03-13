@@ -101,7 +101,7 @@ describe('db Route', () => {
     })
 
     describe('update job', () => {
-        xit('returns 200 status if a job is successfully updated', async () => {
+        it('returns 200 status if a job is successfully updated', async () => {
             const jobId = 25;
             const jobData = {
                 job_role_name: 'Test Software Developer 3',
@@ -113,7 +113,7 @@ describe('db Route', () => {
             const response = await request(app).patch('/api/job/25').send(jobData)
             expect(response.status).toBe(200);
         })
-        xit('returns 400 status if job doesnt exist', async () => {
+        xit('returns 400 status if job does not exist', async () => {
             const incompleteJobData = {
                 job_role_name: {},
                 company_name: '',
@@ -131,7 +131,7 @@ describe('db Route', () => {
             expect(response.status).toBe(200);
         })
         it('returns an error if category id does not exist in db', async () => {
-            const response = await request(app).get('/api/category/700');
+            const response = await request(app).get('/api/category/7000000');
             expect(response.status).toBe(400);
         })
         it('returns an array with one category', async () => {
@@ -159,7 +159,7 @@ describe('db Route', () => {
         })
         it('returns created category_id', async () => {
             const response = await request(app).post('/api/category').send({ user_id: "2", category_name: 'WAITING' });
-            expect(response.body._id).not.toBe(undefined);
+            expect(response.body.category_id).not.toBe(undefined);
         })
 
     })

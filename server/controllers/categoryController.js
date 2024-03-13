@@ -14,7 +14,7 @@ categoryController.getOneCategory = (req, res, next) => {
       if (result.rows[0] === undefined){
         return next({
           log: 'Database returned nothing.Category id likely does not exist',
-          status: 404,
+          status: 400,
           message: { err: 'Database returned nothing.' },
         })
       }
