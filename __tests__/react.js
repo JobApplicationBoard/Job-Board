@@ -9,11 +9,6 @@ describe('Unit testing React components', () => {
   // Testing Category.jsx
   // Check if the Add Job button has been clicked
   test('modal opens when add job button is clicked', async () => {
-    // // Create a new div container
-    // const container = document.createElement('div');
-    // // Append the new div in the body
-    // document.body.appendChild(container);
-
     // Render the Category into the container
     let result = await render(
       <Provider store={store}>
@@ -36,13 +31,14 @@ describe('Unit testing React components', () => {
     //   true
     // );
 
-    expect(result.getByText(/Add Job/)).toBeTruthy();
+    // const addButton = result.getByText(/Add Job/);
+    const addButton = result.getByText(/Add Job/);
+    console.log('addButton', addButton);
+    addButton.click();
+
+    expect(result.getByText(/Create a new Job/)).toBeTruthy();
 
     // Cleanup
     // document.body.removeChild(container);
   });
-
-  // 1. Call function openModal
-  // <body class="ReactModel__Body--open">
-  // 2. Check the value of isOpen
 });
