@@ -7,7 +7,7 @@ jobController.getOneJob = (req, res, next) => {
   const query = `
         SELECT *
         FROM listings
-        WHERE listing_id = $1'
+        WHERE listing_id = $1
         `;
 
   db.query(query, [id])
