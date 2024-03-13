@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import Category from '../client/components/Category';
@@ -16,29 +16,13 @@ describe('Unit testing React components', () => {
       </Provider>
     );
 
-    // // Find the addJob button and call the click event handler
-    // const addJobButton = container.querySelector('#addJob');
-    // addJobButton.click();
-
-    // Check if the "modal is open"
-    // const modalTitle = container.querySelector();
-    // expect(modalTitle.textContent).toBe();
-
-    // Check if the class "ReactModal__Body--open" exists in the body after clicking the button
-    // expect ( the class of the body ).toBe("ReactModal__Body--open")
     console.log('Inside the testing button click handler');
-    // expect(document.body.classList.contains('ReactModal__Body--open')).toBe(
-    //   true
-    // );
 
-    // const addButton = result.getByText(/Add Job/);
-    const addButton = result.getByText(/Add Job/);
-    console.log('addButton', addButton);
-    addButton.click();
+    // Grab the button on <Category />, rendered in the result variable
+    const addButton = screen.getByRole('button');
+    fireEvent.click(addButton);
 
+    // Test if the click button handler gets the text "Create a new Job" in <Category/>
     expect(result.getByText(/Create a new Job/)).toBeTruthy();
-
-    // Cleanup
-    // document.body.removeChild(container);
   });
 });

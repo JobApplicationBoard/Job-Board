@@ -10,7 +10,6 @@ const dbRouter = express.Router();
 // get one job
 dbRouter.get('/job/:id', jobController.getOneJob, (req, res) => {
   const { getOneJob } = res.locals;
-  console.log('Back in the final function of jobController.getOneJob');
   res.status(200).send(getOneJob);
 });
 
@@ -51,7 +50,8 @@ dbRouter.get('/category', categoryController.getAllCategory, (req, res) => {
 
 // create category
 dbRouter.post('/category', categoryController.createCategory, (req, res) => {
-  res.status(200).json({ _id: res.locals.category_id });
+  console.log("in category's post request");
+  res.status(200).json({ category_id: res.locals.category_id });
 });
 
 // update category

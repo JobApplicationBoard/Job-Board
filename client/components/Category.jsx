@@ -97,6 +97,9 @@ const Category = ({ name, id }) => {
           <button id="addJob" onClick={openModal}>
             Add Job
           </button>
+          <button id="removeJob">
+            X
+          </button>
         </div>
         <div className="category-header">
           <p>

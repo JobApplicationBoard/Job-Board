@@ -37,7 +37,9 @@ const Board = () => {
   console.log('categories in board.jsx: ', categories);
 
   const categoryData = categories.map((category, index) => {
-    return <Category name={category.category_name} id={category._id} key={index} />;
+    return (
+      <Category name={category.category_name} id={category._id} key={index} />
+    );
   });
 
   async function submitHandler(event) {
@@ -51,7 +53,7 @@ const Board = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: 1,
+          user_id: 2,
           category_name: event.target[0].value,
         }),
       });
@@ -70,16 +72,16 @@ const Board = () => {
   return (
     <div>
       <h3>AxoBoard</h3>
-      <div className='category-input-container'>
-        <div className='left-content'></div>
-        <div className='right-content'>
+      <div className="category-input-container">
+        <div className="left-content"></div>
+        <div className="right-content">
           <form onSubmit={(event) => submitHandler(event)}>
-            <input placeholder='Enter Category Name' type='text' />
-            <button type='submit'>Add Category</button>
+            <input placeholder="Enter Category Name" type="text" />
+            <button type="submit">Add Category</button>
           </form>
         </div>
       </div>
-      <div className='board-container'>{categoryData}</div>
+      <div className="board-container">{categoryData}</div>
     </div>
   );
 };
