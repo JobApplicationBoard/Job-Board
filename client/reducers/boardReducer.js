@@ -52,13 +52,7 @@ const boardReducer = (state = initialState, action) => {
       };
       break;
     case types.DELETE_CATEGORY:
-      //SQL query to add a category and then return the updated list of cateogries
-      categories = 'PLACEHOLDER'; // RETURN from SQL query to populate
-
-      return {
-        ...state,
-        board: categories,
-      };
+      return Object.assign({}, state);
       break;
     case types.UPDATE_CATEGORY:
       //SQL query to add a category and then return the updated list of cateogries
