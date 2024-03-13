@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+// change Modal to html dialog box
 import Modal from 'react-modal';
+
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addCardActionCreator } from '../actions/actions.js';
@@ -9,10 +11,10 @@ import Card from './Card.jsx';
 const Category = ({ name, id }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
   function openModal(e) {
     console.log('id: ', id);
     console.log('name: ', name);
-
     e.preventDefault();
     setIsOpen(true);
   }
@@ -68,40 +70,42 @@ const Category = ({ name, id }) => {
     },
   };
 
+
   return (
     <>
       <Modal isOpen={isOpen} style={customStyles} ariaHideApp={false}>
         <button onClick={() => setIsOpen(false)}>CLOSE</button>
-        <h1>Create a new Job </h1>
+        <h1>Create a new Job</h1>
         <form onSubmit={(event) => handleSubmit(event)}>
           <input
-            name='job_role_name'
-            type='text'
-            placeholder='Enter Job Name'
+            name="job_role_name"
+            type="text"
+            placeholder="Enter Job Name"
           />
           <input
-            name='company_name'
-            type='text'
-            placeholder='Enter Company Name'
+            name="company_name"
+            type="text"
+            placeholder="Enter Company Name"
           />
-          <input name='details' type='text' placeholder='Enter Job Details' />
-          <input name='category_id' type='hidden' defaultValue={id} />
-          <button type='submit'>Submit</button>
+          <input name="details" type="text" placeholder="Enter Job Details" />
+          <input name="category_id" type="hidden" defaultValue={id} />
+          <button type="submit">Submit</button>
         </form>
       </Modal>
-      <div className='category'>
-        <div className='category-button'>
-          <button id='addJob' onClick={openModal}>
+      <div className="category">
+        <div className="category-button">
+          <button id="addJob" onClick={openModal}>
             Add Job
           </button>
         </div>
-        <div className='category-header'>
+        <div className="category-header">
           <p>
             <strong>{name}</strong>
           </p>
         </div>
+        {/* Displaying cards for each category */}
         <div>
-          <Card />
+          <Card jobname="Software" />
           <Card />
           <Card />
         </div>
