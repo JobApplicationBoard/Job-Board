@@ -1,4 +1,8 @@
 /**
+ * @jest-environment node
+ */
+
+/**
  * ************************************
  *
  * @author Stephen Chow & Bongi Sibanda
@@ -7,6 +11,7 @@
  *
  * ************************************
  */
+
 
 const request = require('supertest');
 const dbRouter = require('../../server/routes/dbRouter');

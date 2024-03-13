@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 // Import modules necessary for tests
 import React from "react";
 import { render, screen } from '@testing-library/react';

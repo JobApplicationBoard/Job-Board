@@ -21,9 +21,6 @@
       "react-app/jest"
     ]
   },
-  "jest": {
-    "testEnvironment": "jsdom"
-  },
   "keywords": [],
   "author": "Axojobl",
   "license": "ISC",
