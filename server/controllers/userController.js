@@ -30,29 +30,43 @@ userController.createUser = (req, res, next) => {
 };
 
 userController.login = (req, res, next) => {
-    const { username, password } = req.body;
-    const query = 'SELECT * FROM users WHERE username = $1';
-  
-    db.query(query, [username])
-      .then((result) => {
-        if (result.rows.length === 0 || password !== result.rows.password) {
-          return res.status(401).json({ error: 'Cannot find user or invalid password' });
-        }
-        const user = result.rows[0];
-        res.locals.user = user
-        return next();
-      })
-      .catch((err) => {
-        return next({
-          log: `Error in userController.login: ${err}`,
-          status: 500,
-          message: { err: 'An error occurred during login process' },
-        });
+  const { username, password } = req.body;
+  const query = `
+    SELECT * 
+    FROM users 
+    WHERE username = $1
+    `;
+  console.log('I am username: ', username);
+  console.log('I am password: ', password);
+
+  db.query(query, [username])
+    .then((result) => {
+      console.log('I am result from database: ', result);
+      if (result.rows.length === 0 && password !== result.rows.password) {
+        return res
+          .status(401)
+          .json({ error: 'Cannot find user or invalid password' });
+      }
+      const user = result.rows[0];
+      res.locals.user = user;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Error in userController.login: ${err}`,
+        status: 500,
+        message: { err: 'An error occurred during login process' },
       });
-  };
+    });
+};
 
 userController.verifyUser = (req, res, next) => {};
 
-userController.deleteUser = (req, res, next) => {};
+userController.deleteUser = (req, res, next) => {
+  const { username, password } = req.body;
+  const query = `
+  
+  `;
+};
 
 module.exports = userController;
