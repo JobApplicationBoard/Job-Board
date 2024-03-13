@@ -10,7 +10,6 @@ const dbRouter = express.Router();
 // get one job
 dbRouter.get('/job/:id', jobController.getOneJob, (req, res) => {
   const { getOneJob } = res.locals;
-  console.log('Back in the final function of jobController.getOneJob');
   res.status(200).send(getOneJob);
 });
 

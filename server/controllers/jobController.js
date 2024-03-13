@@ -12,13 +12,19 @@ jobController.getOneJob = (req, res, next) => {
 
   db.query(query)
     .then((result) => {
-  
+      if (result.rows[0] === undefined){
+         return next({
+           log: 'Database returned nothing',
+           status: 404,
+           message: { err: 'Database returned nothing.' },
+         })
+      } 
       res.locals.getOneJob = result.rows[0];
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving job from database',
+        log: `Error retrieving job from database ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });

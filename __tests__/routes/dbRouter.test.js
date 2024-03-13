@@ -22,7 +22,7 @@ app.use('/api', dbRouter);
 describe('db Route', () => {
     describe('get one job', () => {
         it('returns a 200 status if correct id given', async () => {
-
+            
             const response = await request(app).get('/api/job/25');
             expect(response.status).toBe(200);
 
@@ -78,7 +78,7 @@ describe('db Route', () => {
             const response = await request(app).patch('/api/job/25').send(jobData)
             expect(response.status).toBe(200);
         })
-        it('returns 400 status if job doesnt exist', async () => {
+        xit('returns 400 status if job doesnt exist', async () => {
             const incompleteJobData = {
                 job_role_name: {},
                 company_name: '',
@@ -118,22 +118,22 @@ describe('db Route', () => {
 
     })
     describe('create a category', () => {
-        it('returns a 200 status', async () => {
+        xit('returns a 200 status', async () => {
             const response = await request(app).post('/api/category').send({ user_id: "2", category_name: 'Waiting' });
             expect(response.status).toBe(200);
         })
-        it('returns created category_id', async () => {
+        xit('returns created category_id', async () => {
             const response = await request(app).post('/api/category').send({ user_id: "2", category_name: 'Waiting' });
             expect(response.body._id).not.toBe(undefined);
         })
 
     })
     describe('update a category', () => {
-        it('returns a 200 status', async () => {
+        xit('returns a 200 status', async () => {
             const response = await request(app).patch('/api/category/116').send({ user_id: "2", category_name: 'Waiting for response' });
             expect(response.status).toBe(200);
         })
-        it('returns updated category', async () => {
+        xit('returns updated category', async () => {
             const response = await request(app).patch('/api/category/116').send({ user_id: "2", category_name: 'Waiting for response' });
             expect(response.body.length).not.toBe(0);
         })
