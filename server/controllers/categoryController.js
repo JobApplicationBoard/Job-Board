@@ -4,22 +4,27 @@ const categoryController = {};
 
 categoryController.getOneCategory = (req, res, next) => {
   const { id } = req.params;
-  console.log('I am category id', id);
   const query = `
         SELECT *
         FROM categories
-        WHERE category_id = '${id}'
+        WHERE category_id = $1
     `;
-  db.query(query)
+  db.query(query, [id])
     .then((result) => {
+      if (result.rows[0] === undefined){
+        return next({
+          log: 'Database returned nothing.Category id likely does not exist',
+          status: 404,
+          message: { err: 'Database returned nothing.' },
+        })
+      }
       res.locals.getOneCategory = result.rows[0];
       //if result.rows[0] undefined return an error cause job doesn't exist; 
-      console.log('I am result.rows[0]:' ,result.rows[0]);
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database',
+        log: `Error getting category from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -39,7 +44,7 @@ categoryController.getAllCategory = (req, res, next) => {
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database',
+        log: `Error getting categories from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -48,10 +53,15 @@ categoryController.getAllCategory = (req, res, next) => {
 
 categoryController.createCategory = (req, res, next) => {
   const { user_id, category_name } = req.body;
-   console.log(req.body);
+  if (!user_id || !category_name){
+    return next({
+      log: `Error creating category`,
+      status: 400,
+      message: { err: 'Missing user_id or category_name' },
+    });
+  }
 
   const params = [user_id, category_name];
-  console.log({params})
   const query = `
         INSERT INTO categories (user_id, category_name)
         VALUES ($1, $2)
@@ -65,7 +75,7 @@ categoryController.createCategory = (req, res, next) => {
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database', err,
+        log: `Error creating category from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -94,15 +104,15 @@ categoryController.updateCategory = (req, res, next) => {
   const query = `
   UPDATE categories
   SET ${setFields.join(', ')}
-  WHERE category_id = '${id}'
+  WHERE category_id = $1
   `;
-  db.query(query)
+  db.query(query, [id])
     .then((result) => {
       return next();
     })
     .catch((err) => {
       return next({
-        log: `Error retrieving job from database ${err}`,
+        log: `Error updating category from database ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -114,16 +124,16 @@ categoryController.deleteCategory = (req, res, next) => {
 
   const query = `
       DELETE FROM categories
-      WHERE category_id = '${id}'
+      WHERE category_id = $1
     `;
 
-  db.query(query)
+  db.query(query, [id])
     .then((result) => {
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database',
+        log: `Error deleting category from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });

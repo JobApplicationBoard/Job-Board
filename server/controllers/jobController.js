@@ -14,7 +14,7 @@ jobController.getOneJob = (req, res, next) => {
     .then((result) => {
       if (result.rows[0] === undefined){
          return next({
-           log: 'Database returned nothing',
+           log: 'Database returned nothing.Job id likely does not exist',
            status: 404,
            message: { err: 'Database returned nothing.' },
          })
@@ -82,6 +82,7 @@ jobController.createJob = (req, res, next) => {
   // destructure what we need from req.body
   const { job_role_name, company_name, details, date_applied, category_id } =
     req.body;
+  
   const status = 'status'
   // put destructured content into a params array to be passed into .query method
   const params = [
@@ -157,10 +158,10 @@ jobController.deleteJob = (req, res, next) => {
 
   const query = `
       DELETE FROM listings
-      WHERE listing_id = '${id}'
+      WHERE listing_id = $1
     `;
 
-  db.query(query)
+  db.query(query, [id])
     .then((result) => {
       return next();
     })
