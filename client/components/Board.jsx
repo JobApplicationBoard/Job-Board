@@ -11,6 +11,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const [catId, setCatId] = useState(0);
 
+  // set to run only once the page load, yet not hooked up to the state - Evan
   useEffect(() => {
     async function fetchAll() {
       try {
@@ -53,6 +54,7 @@ const Board = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          /* ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ WHERE USER_ID IS HARD-CODED TO 2 ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ */
           user_id: 2,
           category_name: event.target[0].value,
         }),
