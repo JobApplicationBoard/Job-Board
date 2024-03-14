@@ -32,16 +32,16 @@ jobController.getOneJob = (req, res, next) => {
 };
 
 jobController.getAllJobs = (req, res, next) => {
-  
-  const { userId } = req.cookies;
- 
+
+  // const { userId } = req.cookies;
+  const userId = "2";
   const query = `
   SELECT listings.*,categories.*, users.user_id FROM listings
   INNER JOIN categories ON listings.category_id = categories.category_id
   INNER JOIN users ON categories.user_id = users.user_id
   WHERE users.user_id = $1
   `;
-  
+
   //cleaned up the query
   // const query = `
   //     SELECT listings.* 
@@ -104,7 +104,7 @@ jobController.createJob = (req, res, next) => {
 };
 
 jobController.updateJob = (req, res, next) => {
-  
+
   //do not need userId here as well. knowing listing id is enough to update a job listing. 
   const { id } = req.params;
 
