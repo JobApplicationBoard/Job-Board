@@ -12,7 +12,6 @@ jobController.getOneJob = (req, res, next) => {
 
   db.query(query)
     .then((result) => {
-  
       res.locals.getOneJob = result.rows[0];
       return next();
     })
@@ -71,12 +70,11 @@ jobController.createJob = (req, res, next) => {
   console.log(params);
   db.query(query, params)
     .then((result) => {
-
       return next();
     })
     .catch((err) => {
       return next({
-        log: `Error retrieving job from database, ${err}`,
+        log: 'Error retrieving job from database',
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -91,7 +89,6 @@ jobController.updateJob = (req, res, next) => {
   // could be to update 1 field, could be to update 7 fields
 
   const fields = Object.entries(req.body);
-  console.log('i am fields', {fields});
 
   // setFields will be what we pass into SET field of SQL Update Query
   const setFields = [];
@@ -100,7 +97,9 @@ jobController.updateJob = (req, res, next) => {
   for (const field of fields) {
     setFields.push(`${field[0]} = '${field[1]}'`);
   }
+
   //turn setFields array into string for SQL query
+
   const query = `
   UPDATE listings
   SET ${setFields.join(', ')}
@@ -108,12 +107,11 @@ jobController.updateJob = (req, res, next) => {
   `;
   db.query(query)
     .then((result) => {
-      //TODO: complete the route
       return next();
     })
     .catch((err) => {
       return next({
-        log: `Error retrieving job from database, ${err}`,
+        log: 'Error retrieving job from database',
         status: 400,
         message: { err: 'An error occurred' },
       });

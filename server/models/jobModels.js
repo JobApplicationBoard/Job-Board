@@ -12,4 +12,3 @@ module.exports = {
         return pool.query(text, params, callback);
     }
 }
-

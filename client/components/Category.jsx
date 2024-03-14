@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// change Modal to html dialog box
 import Modal from 'react-modal';
-
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addCardActionCreator } from '../actions/actions.js';
@@ -11,10 +9,10 @@ import Card from './Card.jsx';
 const Category = ({ name, id }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-
   function openModal(e) {
     console.log('id: ', id);
     console.log('name: ', name);
+
     e.preventDefault();
     setIsOpen(true);
   }
@@ -70,78 +68,42 @@ const Category = ({ name, id }) => {
     },
   };
 
-  // Dropping functions by preventDefault
-  function allowDrop(event) {
-    event.preventDefault();
-  }
-
-  // logic for card dnd
-  function drop(event) {
-    // event.preventDefault();
-    
-    // Retreive the ID of the dragged card from dataTransfer object
-    const cardId = event.dataTransfer.getData('text/plain');
-    // Retreive the dragged card element
-    const card = document.getElementById(cardId);
-
-    // Check if the card exists
-    if (card) {
-      // Create a copy of the card
-      const newCard = card.cloneNode(true);
-      event.target.appendChild(newCard);
-      card.parentNode.removeChild(card);
-
-      // // Check if the card is dropped in the valid zone, 'category'
-      // if (event.target.classList.contains('category')) {
-      //   // Append the cloned card
-      //   event.target.appendChild(newCard);
-      //   // Remove the original card from where it was
-      //   card.parentNode.removeChild(card);
-      // } else {
-      //   // If the card is dropped at a invlid location, restore the original card
-      //   const originalParent = card.parentNode;
-      //   originalParent.appendChild(card);
-      // }
-    } else {
-      console.error('Card element not found');
-    }
-  }
-
   return (
     <>
       <Modal isOpen={isOpen} style={customStyles} ariaHideApp={false}>
         <button onClick={() => setIsOpen(false)}>CLOSE</button>
-        <h1>Create a new Job</h1>
+        <h1>Create a new Job </h1>
         <form onSubmit={(event) => handleSubmit(event)}>
           <input
-            name="job_role_name"
-            type="text"
-            placeholder="Enter Job Name"
+            name='job_role_name'
+            type='text'
+            placeholder='Enter Job Name'
           />
           <input
-            name="company_name"
-            type="text"
-            placeholder="Enter Company Name"
+            name='company_name'
+            type='text'
+            placeholder='Enter Company Name'
           />
-          <input name="details" type="text" placeholder="Enter Job Details" />
-          <input name="category_id" type="hidden" defaultValue={id} />
-          <button type="submit">Submit</button>
+          <input name='details' type='text' placeholder='Enter Job Details' />
+          <input name='category_id' type='hidden' defaultValue={id} />
+          <button type='submit'>Submit</button>
         </form>
       </Modal>
-      <div className="category" onDrop={drop} onDragOver={allowDrop}>
-        <div className="category-button">
-          <button id="addJob" onClick={openModal}>
+      <div className='category'>
+        <div className='category-button'>
+          <button id='addJob' onClick={openModal}>
             Add Job
           </button>
         </div>
-        <div className="category-header">
+        <div className='category-header'>
           <p>
             <strong>{name}</strong>
           </p>
         </div>
-        {/* Displaying cards for each category */}
         <div>
-          <Card id="card" />
+          <Card />
+          <Card />
+          <Card />
         </div>
       </div>
     </>
