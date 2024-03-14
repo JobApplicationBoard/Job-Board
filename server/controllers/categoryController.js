@@ -4,22 +4,27 @@ const categoryController = {};
 
 categoryController.getOneCategory = (req, res, next) => {
   const { id } = req.params;
-  console.log('I am category id', id);
   const query = `
         SELECT *
         FROM categories
-        WHERE category_id = '${id}'
+        WHERE category_id = $1
     `;
-  db.query(query)
+  db.query(query, [id])
     .then((result) => {
+      if (result.rows[0] === undefined) {
+        return next({
+          log: 'Database returned nothing.Category id likely does not exist',
+          status: 400,
+          message: { err: 'Database returned nothing.' },
+        });
+      }
       res.locals.getOneCategory = result.rows[0];
-      //if result.rows[0] undefined return an error cause job doesn't exist; 
-      console.log('I am result.rows[0]:' ,result.rows[0]);
+      //if result.rows[0] undefined return an error cause job doesn't exist;
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database',
+        log: `Error getting category from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -27,19 +32,21 @@ categoryController.getOneCategory = (req, res, next) => {
 };
 
 categoryController.getAllCategory = (req, res, next) => {
+  const { userId } = req.cookies;
   const query = `
       SELECT * 
       FROM categories
+      WHERE user_id = $1
     `;
 
-  db.query(query)
+  db.query(query, [userId])
     .then((result) => {
       res.locals.getAllCategory = result.rows;
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database',
+        log: `Error getting categories from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -48,10 +55,17 @@ categoryController.getAllCategory = (req, res, next) => {
 
 categoryController.createCategory = (req, res, next) => {
   const { user_id, category_name } = req.body;
-   console.log(req.body);
+  console.log(user_id);
+  console.log(category_name);
+  if (!user_id || !category_name) {
+    return next({
+      log: `Error creating category`,
+      status: 400,
+      message: { err: 'Missing user_id or category_name' },
+    });
+  }
 
   const params = [user_id, category_name];
-  console.log({params})
   const query = `
         INSERT INTO categories (user_id, category_name)
         VALUES ($1, $2)
@@ -65,7 +79,7 @@ categoryController.createCategory = (req, res, next) => {
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database', err,
+        log: `Error creating category from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -94,15 +108,15 @@ categoryController.updateCategory = (req, res, next) => {
   const query = `
   UPDATE categories
   SET ${setFields.join(', ')}
-  WHERE category_id = '${id}'
+  WHERE category_id = $1
   `;
-  db.query(query)
+  db.query(query, [id])
     .then((result) => {
       return next();
     })
     .catch((err) => {
       return next({
-        log: `Error retrieving job from database ${err}`,
+        log: `Error updating category from database ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
@@ -110,21 +124,54 @@ categoryController.updateCategory = (req, res, next) => {
 };
 
 categoryController.deleteCategory = (req, res, next) => {
+  const { id } = req.params;
+
+  //if the category is still being referenced in listings,this wont work
+  const query = `
+      DELETE FROM categories
+      WHERE category_id = $1
+    `;
+
+  db.query(query, [id])
+    .then((result) => {
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Error deleting category from database, ${err}`,
+        status: 400,
+        message: { err: 'An error occurred' },
+      });
+    });
+};
+
+categoryController.deleteCategory2 = (req, res, next) => {
+  // const { id } = req.params;
+  const { userId } = req.cookies;
   const { name } = req.body;
+
+  //deletes category and referencies elsewhere
+
+  // const query = `
+  //     DELETE FROM categories
+  //     WHERE category_id = $1
+
+  //   `;
 
   const query = `
       DELETE FROM categories
-      WHERE category_name = '${name}'
+      WHERE category_name = $1
+      AND user_id = $2
     `;
 
-  db.query(query)
+  db.query(query, [name, userId])
     .then((result) => {
       res.locals.result = result.rowCount;
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Error retrieving category from database',
+        log: `Error deleting category from database, ${err}`,
         status: 400,
         message: { err: 'An error occurred' },
       });
