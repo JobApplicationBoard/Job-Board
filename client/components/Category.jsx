@@ -12,7 +12,7 @@ const Category = ({ name, id }) => {
   const [jobData, setJobData] = useState([]);
 
   function openModal(e) {
-
+    
     e.preventDefault();
     setIsOpen(true);
   }

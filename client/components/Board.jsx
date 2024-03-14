@@ -102,7 +102,7 @@ const Board = () => {
             <button type='submit'>Add Category</button>
           </form>
           <form onSubmit={(event) => deleteHandler(event)}>
-            <input placeholder='Enter Category Name' type='text' />
+            <input placeholder='Enter Category ID' type='text' />
             <button type='submit'>Delete Category</button>
           </form>
         </div>
