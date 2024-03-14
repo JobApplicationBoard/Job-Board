@@ -42,7 +42,7 @@ const Board = () => {
       <Category name={category.category_name} id={category._id} key={index} />
     );
   });
-
+  console.log({categoryData})
   async function submitHandler(event) {
     event.preventDefault();
     // console.log(event.target[0].value);

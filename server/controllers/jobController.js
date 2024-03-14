@@ -66,6 +66,35 @@ jobController.getAllJobs = (req, res, next) => {
     });
 };
 
+jobController.getAllJobsInCategory = (req, res, next) => {
+  
+  const { id } = req.params
+  // const { userId } = req.cookies;
+  const userId = "2";
+  const query = `
+        SELECT listings.*  
+        FROM listings 
+        INNER JOIN categories 
+        ON listings.category_id = categories.category_id 
+        WHERE listings.category_id = $1
+        AND categories.user_id = $2 
+  `;
+
+  db.query(query, [id , userId])
+    .then((result) => {
+      console.log("I am results", result.rows);
+      res.locals.getAllJobsInCategory = result.rows;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Error retrieving jobs from database ${err}`,
+        status: 400,
+        message: { err: 'An error occurred' },
+      });
+    });
+  
+}
 
 jobController.createJob = (req, res, next) => {
   //do not need userId here because category_ids will be unique to users.

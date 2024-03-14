@@ -6,12 +6,16 @@ const categoryController = require('../controllers/categoryController');
 const dbRouter = express.Router();
 
 // job routes
-
 // get one job
 dbRouter.get('/job/:id', jobController.getOneJob, (req, res) => {
   const { getOneJob } = res.locals;
   return res.status(200).send(getOneJob);
 });
+
+//get all jobs in one category 
+dbRouter.get('/jobs/:id', jobController.getAllJobsInCategory, (req, res) => {
+  return res.status(200).send(res.locals.getAllJobsInCategory);
+})
 
 // get all jobs
 dbRouter.get('/job', jobController.getAllJobs, (req, res) => {

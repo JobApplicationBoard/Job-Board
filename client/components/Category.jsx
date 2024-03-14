@@ -68,6 +68,8 @@ const Category = ({ name, id }) => {
     },
   };
 
+  
+
   return (
     <>
       <Modal isOpen={isOpen} style={customStyles} ariaHideApp={false}>
