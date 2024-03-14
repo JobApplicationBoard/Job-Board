@@ -13,12 +13,11 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   // cateJob: {category: 'placeholder', jobs: []},
-  categories: [],
+  categories: []
 };
 
 const boardReducer = (state = initialState, action) => {
   // let board;
-
   switch (action.type) {
     /**
      * 
