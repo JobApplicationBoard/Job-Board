@@ -32,8 +32,9 @@ categoryController.getOneCategory = (req, res, next) => {
 };
 
 categoryController.getAllCategory = (req, res, next) => {
-
-  const { userId } = req.cookies
+   
+  const { userId }  = "2"
+  // const { userId } = req.cookies
   const query = `
       SELECT * 
       FROM categories
@@ -144,31 +145,5 @@ categoryController.deleteCategory = (req, res, next) => {
     });
 };
 
-categoryController.deleteCategory2 = (req, res, next) => {
-  const { id } = req.params;
-
-
-
-  //deletes category and referencies elsewhere
-   
-  const query = `
-      DELETE FROM categories
-      WHERE category_id = $1
-
-    `;
-
-  db.query(query, [id])
-    .then((result) => {
-      res.locals.result = result.rowCount;
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: `Error deleting category from database, ${err}`,
-        status: 400,
-        message: { err: 'An error occurred' },
-      });
-    });
-};
 
 module.exports = categoryController;
