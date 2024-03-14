@@ -49,13 +49,13 @@ userController.login = async (req, res, next) => {
     }
     const user = result.rows[0];
     console.log('I am result.rows[0]: ', user);
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(password, user.password); //first arguement will be hashed
     if (!match) {
       return res
         .status(401)
         .json({ error: 'Cannot find user or invalid password' });
     }
-    res.locals.user = { username: user.username, id: user.user_id };
+    res.locals.user = { username: user.username, id: user.user_id }; //Didnt store password in res.locals.user for security
     return next();
   } catch (err) {
     return next({
@@ -70,11 +70,41 @@ userController.getUser = (req, res, next) => {};
 
 userController.verifyUser = (req, res, next) => {};
 
-userController.deleteUser = (req, res, next) => {
+userController.deleteUser = async (req, res, next) => {
   const { username, password } = req.body;
   const query = `
-  
+  SELECT user_id, password
+  FROM users
+  WHERE username = $1
   `;
+
+  try {
+    const result = await db.query(query, [username]);
+    console.log('I am result from delete post request: ', result);
+    if (result.rows.length === 0) {
+      res.status(401).json({ error: 'Cannot find user or invalid password' });
+    }
+    const user = result.rows[0];
+    console.log('I am result.rows[0]: ', user);
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      res.status(401).json({ error: 'Cannot find user or invalid password' });
+    }
+    res.locals.deletedUser = { username: user.username, id: user.user_id };
+
+    const deleteQuery = `
+    DELETE FROM users
+    WHERE user_id = $1
+    `;
+    const deleteUserResult = await db.query(deleteQuery, [user.user_id]);
+    return next();
+  } catch (err) {
+    return next({
+      log: `Error in userController.deleteUser: ${err}`,
+      status: 500,
+      message: { err: 'An error occurred during the delete user process' },
+    });
+  }
 };
 
 module.exports = userController;
