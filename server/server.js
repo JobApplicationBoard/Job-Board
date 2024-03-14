@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = 3000;
@@ -9,6 +10,7 @@ const userRouter = require('./routes/userRouter');
 const dbRouter = require('./routes/dbRouter');
 
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 

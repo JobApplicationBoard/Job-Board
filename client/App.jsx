@@ -17,8 +17,6 @@ import Board from '../client/components/Board.jsx';
 
 const App = () => {
 
-  
-
   return (
     <div>
       <header>
