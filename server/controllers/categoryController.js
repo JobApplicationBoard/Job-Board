@@ -14,7 +14,7 @@ categoryController.getOneCategory = (req, res, next) => {
       if (result.rows[0] === undefined){
         return next({
           log: 'Database returned nothing.Category id likely does not exist',
-          status: 400,
+          status: 400 ,
           message: { err: 'Database returned nothing.' },
         })
       }
@@ -121,7 +121,31 @@ categoryController.updateCategory = (req, res, next) => {
 
 categoryController.deleteCategory = (req, res, next) => {
   const { id } = req.params;
+  
+  //if the category is still being referenced in listings,this wont work 
+  const query = `
+      DELETE FROM categories
+      WHERE category_id = $1
+    `;
 
+  db.query(query, [id])
+    .then((result) => {
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Error deleting category from database, ${err}`,
+        status: 400,
+        message: { err: 'An error occurred' },
+      });
+    });
+};
+
+categoryController.deleteCategory2 = (req, res, next) => {
+  const { id } = req.params;
+
+  //deletes category and referencies elsewhere
+   
   const query = `
       DELETE FROM categories
       WHERE category_id = $1

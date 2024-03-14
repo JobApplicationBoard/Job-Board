@@ -1,24 +1,14 @@
 const db = require('../models/jobModels');
-
 const jobController = {};
 
 jobController.getOneJob = (req, res, next) => {
+
   const { id } = req.params;
-  const { userId } = req.cookies;
- 
-  // const query = `
-  //       SELECT *
-  //       FROM listings
-  //       WHERE listing_id = $1 
-  //       `;
   const query = `
-          SELECT listings.*
-          FROM listings
-          LEFT JOIN categories 
-          ON categories.category_id = listings.category_id
-          WHERE listing_id = $1
-          AND user_id = $2
-  `
+        SELECT *
+        FROM listings
+        WHERE listings_id = $1
+    `;
 
   db.query(query, [id, userId])
     .then((result) => {
@@ -44,12 +34,23 @@ jobController.getOneJob = (req, res, next) => {
 jobController.getAllJobs = (req, res, next) => {
   
   const { userId } = req.cookies;
+ 
   const query = `
   SELECT listings.*,categories.*, users.user_id FROM listings
   INNER JOIN categories ON listings.category_id = categories.category_id
   INNER JOIN users ON categories.user_id = users.user_id
   WHERE users.user_id = $1
   `;
+  
+  //cleaned up the query
+  // const query = `
+  //     SELECT listings.* 
+  //     FROM listings  
+  //     INNER JOIN categories 
+  //     ON listings.category_id = categories.category_id 
+  //     WHERE user_id = $1;
+  //     `
+
   db.query(query, [userId])
     .then((result) => {
 
@@ -67,6 +68,8 @@ jobController.getAllJobs = (req, res, next) => {
 
 
 jobController.createJob = (req, res, next) => {
+  //do not need userId here because category_ids will be unique to users.
+
   // destructure what we need from req.body
   const { job_role_name, company_name, details, date_applied, category_id } =
     req.body;
@@ -101,6 +104,8 @@ jobController.createJob = (req, res, next) => {
 };
 
 jobController.updateJob = (req, res, next) => {
+  
+  //do not need userId here as well. knowing listing id is enough to update a job listing. 
   const { id } = req.params;
 
   // below is our way of dealing with the fact that you dont
@@ -142,8 +147,8 @@ jobController.updateJob = (req, res, next) => {
 };
 
 jobController.deleteJob = (req, res, next) => {
-  const { id } = req.params;
 
+  const { id } = req.params;
   const query = `
       DELETE FROM listings
       WHERE listing_id = $1
