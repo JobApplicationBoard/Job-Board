@@ -11,15 +11,15 @@ categoryController.getOneCategory = (req, res, next) => {
     `;
   db.query(query, [id])
     .then((result) => {
-      if (result.rows[0] === undefined){
+      if (result.rows[0] === undefined) {
         return next({
           log: 'Database returned nothing.Category id likely does not exist',
-          status: 400 ,
+          status: 400,
           message: { err: 'Database returned nothing.' },
-        })
+        });
       }
       res.locals.getOneCategory = result.rows[0];
-      //if result.rows[0] undefined return an error cause job doesn't exist; 
+      //if result.rows[0] undefined return an error cause job doesn't exist;
       return next();
     })
     .catch((err) => {
@@ -32,8 +32,7 @@ categoryController.getOneCategory = (req, res, next) => {
 };
 
 categoryController.getAllCategory = (req, res, next) => {
-
-  const { userId } = req.cookies
+  const { userId } = req.cookies;
   // const userId = "2"
 
   const query = `
@@ -59,7 +58,7 @@ categoryController.getAllCategory = (req, res, next) => {
 categoryController.createCategory = (req, res, next) => {
   const { category_name } = req.body;
   const user_id = req.cookies.userId;
-  if (!user_id || !category_name){
+  if (!user_id || !category_name) {
     return next({
       log: `Error creating category`,
       status: 400,
@@ -76,7 +75,7 @@ categoryController.createCategory = (req, res, next) => {
 
   db.query(query, params)
     .then((result) => {
-      res.locals.category_id = result.rows[0].category_id
+      res.locals.category_id = result.rows[0].category_id;
       return next();
     })
     .catch((err) => {
@@ -127,8 +126,8 @@ categoryController.updateCategory = (req, res, next) => {
 
 categoryController.deleteCategory = (req, res, next) => {
   const { id } = req.params;
-  
-  //if the category is still being referenced in listings,this wont work 
+
+  //if the category is still being referenced in listings,this wont work
   const query = `
       DELETE FROM categories
       WHERE category_id = $1
@@ -147,6 +146,37 @@ categoryController.deleteCategory = (req, res, next) => {
     });
 };
 
+categoryController.deleteCategory2 = (req, res, next) => {
+  // const { id } = req.params;
+  const { userId } = req.cookies;
+  const { name } = req.body;
 
+  //deletes category and referencies elsewhere
+
+  // const query = `
+  //     DELETE FROM categories
+  //     WHERE category_id = $1
+
+  //   `;
+
+  const query = `
+      DELETE FROM categories
+      WHERE category_name = $1
+      AND user_id = $2
+    `;
+
+  db.query(query, [name, userId])
+    .then((result) => {
+      res.locals.result = result.rowCount;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Error deleting category from database, ${err}`,
+        status: 400,
+        message: { err: 'An error occurred' },
+      });
+    });
+};
 
 module.exports = categoryController;
