@@ -73,7 +73,7 @@ categoryController.createCategory = (req, res, next) => {
 
   db.query(query, params)
     .then((result) => {
-      res.locals.category_id = result.rows[0].category_id
+      res.locals.category_id = result.rows[0].category_id;
       return next();
     })
     .catch((err) => {
@@ -147,15 +147,19 @@ categoryController.deleteCategory = (req, res, next) => {
 categoryController.deleteCategory2 = (req, res, next) => {
   const { id } = req.params;
 
+
+
   //deletes category and referencies elsewhere
    
   const query = `
       DELETE FROM categories
       WHERE category_id = $1
+
     `;
 
   db.query(query, [id])
     .then((result) => {
+      res.locals.result = result.rowCount;
       return next();
     })
     .catch((err) => {
