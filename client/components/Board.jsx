@@ -6,11 +6,13 @@ import Category from './Category.jsx';
 import { addCategoryActionCreator } from '../actions/actions.js';
 import { addCardActionCreator } from '../actions/actions.js';
 import { addToStateActionCreator } from '../actions/actions.js';
+import { deleteCategoryActionCreator } from '../actions/actions.js';
 
 const Board = () => {
   const dispatch = useDispatch();
   const [catId, setCatId] = useState(0);
 
+  // set to run only once the page load, yet not hooked up to the state - Evan
   useEffect(() => {
     async function fetchAll() {
       try {
@@ -31,13 +33,30 @@ const Board = () => {
     }
 
     fetchAll();
-  }, []);
+  }, [catId]);
 
   const categories = useSelector((state) => state.board.categories);
   console.log('categories in board.jsx: ', categories);
 
   const categoryData = categories.map((category, index) => {
-    return <Category name={category.category_name} id={category._id} key={index} />;
+    // dragStart and dragEnd for dragging
+    // function dragStart(event) {
+    //   event.dataTransfer.setData('Text', event.target.id);
+    // }
+
+    // function dragEnd(event) {}
+
+    // returning Category
+    return (
+      // Category = drop target
+      <Category
+        name={category.category_name}
+        id={category._id}
+        key={index}
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      />
+    );
   });
 
   async function submitHandler(event) {
@@ -51,7 +70,8 @@ const Board = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: 1,
+          /* ⬇️ WHERE USER_ID IS HARD-CODED TO 2 ⬇ */
+          user_id: 2,
           category_name: event.target[0].value,
         }),
       });
@@ -66,20 +86,46 @@ const Board = () => {
       console.error('Fail in submitHandler', error);
     }
   }
+  async function deleteHandler(event) {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('/api/category', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: event.target[0].value,
+        }),
+      });
+
+      const data = Math.floor(Math.random() * 1000);
+      setCatId(data);
+      dispatch(deleteCategoryActionCreator(data));
+    } catch (error) {
+      console.error('Fail in deleteHandler', error);
+    }
+  }
 
   return (
     <div>
-      <h3>AxoBoard</h3>
-      <div className='category-input-container'>
-        <div className='left-content'></div>
-        <div className='right-content'>
+      {/* input-container */}
+      <div className="category-input-container">
+        <div className="left-content"></div>
+        <div className="right-content">
           <form onSubmit={(event) => submitHandler(event)}>
+            <input placeholder="Enter Category Name" type="text" />
+            <button type="submit">Add Category</button>
+          </form>
+          <form onSubmit={(event) => deleteHandler(event)}>
             <input placeholder='Enter Category Name' type='text' />
-            <button type='submit'>Add Category</button>
+            <button type='submit'>Delete Category</button>
           </form>
         </div>
       </div>
-      <div className='board-container'>{categoryData}</div>
+      {/* borad-container */}
+      <div className="board-container">{categoryData}</div>
     </div>
   );
 };

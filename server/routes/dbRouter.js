@@ -50,7 +50,8 @@ dbRouter.get('/category', categoryController.getAllCategory, (req, res) => {
 
 // create category
 dbRouter.post('/category', categoryController.createCategory, (req, res) => {
-  res.status(200).json({ _id: res.locals.category_id });
+  console.log("in category's post request");
+  res.status(200).json({ category_id: res.locals.category_id });
 });
 
 // update category
@@ -63,12 +64,8 @@ dbRouter.patch(
 );
 
 // delete category
-dbRouter.delete(
-  '/category/:id',
-  categoryController.deleteCategory,
-  (req, res) => {
-    res.status(200).send('Category Succesfully Deleted');
-  }
-);
+dbRouter.delete('/category', categoryController.deleteCategory, (req, res) => {
+  res.status(200).json(res.locals.result);
+});
 
 module.exports = dbRouter;
