@@ -21,14 +21,14 @@ const boardReducer = (state = initialState, action) => {
 
   switch (action.type) {
     /**
-     * 
+     *
      * Initial page load in Board component that renders all categories and includes them in state
      * Receives payload iterable (array?) of items
      * Adds every item (consisting of ID/category name) to a set
      * Only includes category_name and _id, renaming properties
      * Creates a new shallow copy array from that set
      * Replaces the categories state value with the new array
-     * 
+     *
      */
     case types.ADD_TO_STATE:
       const data = action.payload;
@@ -52,27 +52,25 @@ const boardReducer = (state = initialState, action) => {
       break;
 
     /**
-     * Adds a new card to state after interacting with the 'add category' form in Board component 
+     * Adds a new card to state after interacting with the 'Add Status' form in Board component
      * Does not handle SQL query, instead allows React component to fetch
      */
 
-    case types.ADD_CATEGORY:
-      
+    case types.ADD_STATUS:
       const { categoryName, _id } = action.payload; // RETURN from SQL query to populate
-      // console.log('In ADD_CATEGORY: name, id ', categoryName, _id);
+      // console.log('In ADD_STATUS: name, id ', categoryName, _id);
       return {
         ...state,
         categories: [...state.categories, { category_name: categoryName, _id }],
       };
       break;
-    
+
     /**
      * Deletes a category from state
-     * 
+     *
      */
-    
+
     case types.DELETE_CATEGORY:
-      
       categories = 'PLACEHOLDER'; // RETURN from SQL query to populate
 
       return {
@@ -82,9 +80,9 @@ const boardReducer = (state = initialState, action) => {
       break;
 
     /**
-     * 
+     *
      * Updates a particular category in state
-     * 
+     *
      */
 
     case types.UPDATE_CATEGORY:

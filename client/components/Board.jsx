@@ -79,7 +79,7 @@ const Board = () => {
         <div className="right-content">
           <form onSubmit={(event) => submitHandler(event)}>
             <input placeholder="Enter Category Name" type="text" />
-            <button type="submit">Add Category</button>
+            <button type="submit">Add Status</button>
           </form>
         </div>
       </div>

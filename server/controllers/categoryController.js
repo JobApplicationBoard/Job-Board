@@ -72,7 +72,6 @@ categoryController.createCategory = (req, res, next) => {
         message: { err: 'An error occurred' },
       });
     });
-
 };
 
 categoryController.updateCategory = (req, res, next) => {

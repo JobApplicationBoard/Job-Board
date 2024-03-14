@@ -70,7 +70,6 @@ const Category = ({ name, id }) => {
     },
   };
 
-
   return (
     <>
       <Modal isOpen={isOpen} style={customStyles} ariaHideApp={false}>
@@ -97,9 +96,7 @@ const Category = ({ name, id }) => {
           <button id="addJob" onClick={openModal}>
             Add Job
           </button>
-          <button id="removeJob">
-            X
-          </button>
+          <button id="removeJob">X</button>
         </div>
         <div className="category-header">
           <p>
@@ -108,7 +105,7 @@ const Category = ({ name, id }) => {
         </div>
         {/* Displaying cards for each category */}
         <div>
-          <Card jobname="Software" />
+          <Card />
           <Card />
           <Card />
         </div>

@@ -26,7 +26,7 @@ const root = createRoot(document.getElementById('contents'));
 root.render(
   // wrap the App in the Provider Component and pass in the store
   <Provider store={store}>
-    <div className='App'>
+    <div className="App">
       <App />
     </div>
   </Provider>

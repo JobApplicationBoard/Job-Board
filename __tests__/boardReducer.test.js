@@ -67,10 +67,10 @@ describe('Job-Board boardReducer', () => {
     });
   });
 
-  describe('ADD_CATEGORY', () => {
-    // declare an add category action that has categoryName and _id
+  describe('ADD_STATUS', () => {
+    // declare an add statis action that has categoryName and _id
     const testAdd = {
-      type: 'ADD_CATEGORY',
+      type: 'ADD_STATUS',
       payload: { categoryName: 'New Category', _id: 65 },
     };
 
@@ -83,7 +83,7 @@ describe('Job-Board boardReducer', () => {
 
     it('Should add a category inclusive of previous categories', () => {
       const testSecond = {
-        type: 'ADD_CATEGORY',
+        type: 'ADD_STATUS',
         payload: { categoryName: 'Bonus category', _id: 69 },
       };
 
@@ -94,13 +94,16 @@ describe('Job-Board boardReducer', () => {
 
     it('Final category should be equal to the action added', () => {
       const testSecond = {
-        type: 'ADD_CATEGORY',
+        type: 'ADD_STATUS',
         payload: { categoryName: 'Bonus category', _id: 69 },
       };
 
       let temp = subject(state, testAdd);
       let final = subject(temp, testSecond);
-      expect(final.categories[1]).toEqual({category_name: 'Bonus category', _id: 69});
+      expect(final.categories[1]).toEqual({
+        category_name: 'Bonus category',
+        _id: 69,
+      });
     });
   });
 });
