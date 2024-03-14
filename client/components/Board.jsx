@@ -36,9 +36,11 @@ const Board = () => {
 
   const categories = useSelector((state) => state.board.categories);
   console.log('categories in board.jsx: ', categories);
-
+  
+  console.log("categories from state", categories);
   const categoryData = categories.map((category, index) => {
     return (
+      
       <Category name={category.category_name} id={category._id} key={index} />
     );
   });

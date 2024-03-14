@@ -1,29 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const Card1 = ({jobData}) => {
-  
+const Card = ({ jobData }) => {
+  console.log("jobData in cards", jobData);
   const { job_role_name, company_name, details, date_applied } = jobData;
 
   return (
     <div className="card">
-      <p>{job_role_name}</p>
-      <p>{company_name}</p>
-      <p>{details}</p>
-      <p>{date_applied}</p>
-    </div>
-  );
-};
-
-const Card = () => {
-  
-  return (
-    <div className="card">
-      {/* <p>{job_role_name}</p>
-      <p>{company_name}</p>
-      <p>{details}</p>
-      <p>{date_applied}</p> */}
+      <p>
+        <span className = "bold">Job:</span> {job_role_name}
+      </p>
+      <p>
+        <span className = "bold">Company:</span> {company_name}
+      </p>
+      <p>
+        <span className = "bold">Details:</span> {details}
+      </p>
+      <p>
+        <span className = "bold">Date:</span> {date_applied.slice(0, 10)}
+      </p>
     </div>
   );
 };
