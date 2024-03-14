@@ -32,12 +32,15 @@ categoryController.getOneCategory = (req, res, next) => {
 };
 
 categoryController.getAllCategory = (req, res, next) => {
+
+  const { userId } = req.cookies
   const query = `
       SELECT * 
       FROM categories
+      WHERE user_id = $1
     `;
 
-  db.query(query)
+  db.query(query, [userId])
     .then((result) => {
       res.locals.getAllCategory = result.rows;
       return next();
