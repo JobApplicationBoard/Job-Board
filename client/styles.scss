@@ -113,9 +113,46 @@ body {
   }
 }
 
-.category-header {
+/* Styling for login component */
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
+#loginContainer {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+#loginContainer label {
+  font-weight: bold;
+  display: block;
+}
+
+#loginInput {
+  display: flex;
+}
+
+#loginContainer input {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+#loginButtonsContainer {
+  display: flex;
+  width: 100%;
+  margin-right: 0;
+  justify-content: space-around;
+}
+
+#loginButtonsContainer button {
+  width: 45%;
+  margin-top: 1em;
+}
 .bold {
   font-weight: 400;
 }
