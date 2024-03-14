@@ -60,7 +60,7 @@ categoryController.createCategory = (req, res, next) => {
 
   db.query(query, params)
     .then((result) => {
-      res.locals.category_id = result.rows[0].category_id
+      res.locals.category_id = result.rows[0].category_id;
       return next();
     })
     .catch((err) => {
@@ -110,15 +110,16 @@ categoryController.updateCategory = (req, res, next) => {
 };
 
 categoryController.deleteCategory = (req, res, next) => {
-  const { id } = req.params;
+  const { name } = req.body;
 
   const query = `
       DELETE FROM categories
-      WHERE category_id = '${id}'
+      WHERE category_name = '${name}'
     `;
 
   db.query(query)
     .then((result) => {
+      res.locals.result = result.rowCount;
       return next();
     })
     .catch((err) => {

@@ -6,6 +6,7 @@ import Category from './Category.jsx';
 import { addCategoryActionCreator } from '../actions/actions.js';
 import { addCardActionCreator } from '../actions/actions.js';
 import { addToStateActionCreator } from '../actions/actions.js';
+import { deleteCategoryActionCreator } from '../actions/actions.js';
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -31,13 +32,15 @@ const Board = () => {
     }
 
     fetchAll();
-  }, []);
+  }, [catId]);
 
   const categories = useSelector((state) => state.board.categories);
   console.log('categories in board.jsx: ', categories);
 
   const categoryData = categories.map((category, index) => {
-    return <Category name={category.category_name} id={category._id} key={index} />;
+    return (
+      <Category name={category.category_name} id={category._id} key={index} />
+    );
   });
 
   async function submitHandler(event) {
@@ -51,7 +54,7 @@ const Board = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: 1,
+          user_id: 2,
           category_name: event.target[0].value,
         }),
       });
@@ -66,6 +69,27 @@ const Board = () => {
       console.error('Fail in submitHandler', error);
     }
   }
+  async function deleteHandler(event) {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('/api/category', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: event.target[0].value,
+        }),
+      });
+
+      const data = Math.floor(Math.random() * 1000);
+      setCatId(data);
+      dispatch(deleteCategoryActionCreator(data));
+    } catch (error) {
+      console.error('Fail in deleteHandler', error);
+    }
+  }
 
   return (
     <div>
@@ -76,6 +100,10 @@ const Board = () => {
           <form onSubmit={(event) => submitHandler(event)}>
             <input placeholder='Enter Category Name' type='text' />
             <button type='submit'>Add Category</button>
+          </form>
+          <form onSubmit={(event) => deleteHandler(event)}>
+            <input placeholder='Enter Category Name' type='text' />
+            <button type='submit'>Delete Category</button>
           </form>
         </div>
       </div>

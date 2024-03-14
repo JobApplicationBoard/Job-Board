@@ -73,12 +73,8 @@ const boardReducer = (state = initialState, action) => {
     
     case types.DELETE_CATEGORY:
       
-      categories = 'PLACEHOLDER'; // RETURN from SQL query to populate
+      return Object.assign({}, state);
 
-      return {
-        ...state,
-        board: categories,
-      };
       break;
 
     /**
