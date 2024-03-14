@@ -64,12 +64,8 @@ dbRouter.patch(
 );
 
 // delete category
-dbRouter.delete(
-  '/category/:id',
-  categoryController.deleteCategory,
-  (req, res) => {
-    res.status(200).send('Category Succesfully Deleted');
-  }
-);
+dbRouter.delete('/category', categoryController.deleteCategory, (req, res) => {
+  res.status(200).json(res.locals.result);
+});
 
 module.exports = dbRouter;

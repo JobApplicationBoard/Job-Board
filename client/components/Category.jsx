@@ -101,7 +101,7 @@ const Category = ({ name, id }) => {
       //   const originalParent = card.parentNode;
       //   originalParent.appendChild(card);
       // }
-      
+
     } else {
       console.error('Card element not found');
     }
@@ -133,7 +133,7 @@ const Category = ({ name, id }) => {
           <button id="addJob" onClick={openModal}>
             Add Job
           </button>
-          <button id="removeJob">X</button>
+          
         </div>
         <div className="category-header">
           <p>
