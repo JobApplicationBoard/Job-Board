@@ -93,9 +93,7 @@ const Category = ({ name, id }) => {
      }
     fetchJobsInCategory();
   }, [id]);
-  
 
-  
 
   return (
     <>

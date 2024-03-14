@@ -69,8 +69,8 @@ jobController.getAllJobs = (req, res, next) => {
 jobController.getAllJobsInCategory = (req, res, next) => {
   
   const { id } = req.params
-  // const { userId } = req.cookies;
-  const userId = "2";
+  const { userId } = req.cookies;
+  // const userId = "2";
   const query = `
         SELECT listings.*  
         FROM listings 
