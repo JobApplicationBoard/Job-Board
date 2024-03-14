@@ -4,17 +4,15 @@ const bcrypt = require('bcrypt');
 const userController = {};
 const saltRounds = 10;
 
-userController.getUser = (req, res, next) => {};
-
 userController.createUser = async (req, res, next) => {
   const { username, password } = req.body;
+  const query = `
+  INSERT INTO users (username, password)
+  VALUES ($1, $2) 
+  RETURNING *
+  `;
 
   try {
-    const query = `
-    INSERT INTO users (username, password)
-    VALUES ($1, $2) 
-    RETURNING *
-    `;
     console.log('I am password from user: ', password);
     const hash = await bcrypt.hash(password, saltRounds);
     console.log('I am hashed password: ', hash);
@@ -33,40 +31,8 @@ userController.createUser = async (req, res, next) => {
   }
 };
 
-// userController.login = (req, res, next) => {
-//   const { username, password } = req.body;
-//   const query = `
-//     SELECT *
-//     FROM users
-//     WHERE username = $1
-//     `;
-//   console.log('I am username: ', username);
-//   console.log('I am password: ', password);
-
-//   db.query(query, [username])
-//     .then((result) => {
-//       console.log('I am result from database: ', result);
-//       if (result.rows.length === 0 && password !== result.rows.password) {
-//         return res
-//           .status(401)
-//           .json({ error: 'Cannot find user or invalid password' });
-//       }
-//       const user = result.rows[0];
-//       res.locals.user = user;
-//       return next();
-//     })
-//     .catch((err) => {
-//       return next({
-//         log: `Error in userController.login: ${err}`,
-//         status: 500,
-//         message: { err: 'An error occurred during login process' },
-//       });
-//     });
-// };
-
 userController.login = async (req, res, next) => {
   const { username, password } = req.body;
-
   const query = `
     SELECT * 
     FROM users 
@@ -75,19 +41,20 @@ userController.login = async (req, res, next) => {
 
   try {
     const result = await db.query(query, [username]);
-
+    console.log('I am result from login post request: ', result);
     if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'Cannot find user' });
+      return res
+        .status(401)
+        .json({ error: 'Cannot find user or invalid password' });
     }
-
     const user = result.rows[0];
+    console.log('I am result.rows[0]: ', user);
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      return res.status(401).json({ error: 'Invalid password' });
+      return res
+        .status(401)
+        .json({ error: 'Cannot find user or invalid password' });
     }
-
-    res.cookie('userId', user.user_id, { httpOnly: true, sameSite: 'strict' });
-
     res.locals.user = { username: user.username, id: user.user_id };
     return next();
   } catch (err) {
@@ -98,6 +65,8 @@ userController.login = async (req, res, next) => {
     });
   }
 };
+
+userController.getUser = (req, res, next) => {};
 
 userController.verifyUser = (req, res, next) => {};
 
