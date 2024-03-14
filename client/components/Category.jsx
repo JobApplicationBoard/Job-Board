@@ -70,14 +70,15 @@ const Category = ({ name, id }) => {
     },
   };
 
-  // Dropping functions
+  // Dropping functions by preventDefault
   function allowDrop(event) {
     event.preventDefault();
   }
 
   // logic for card dnd
   function drop(event) {
-    event.preventDefault();
+    // event.preventDefault();
+    
     // Retreive the ID of the dragged card from dataTransfer object
     const cardId = event.dataTransfer.getData('text/plain');
     // Retreive the dragged card element
@@ -101,7 +102,6 @@ const Category = ({ name, id }) => {
       //   const originalParent = card.parentNode;
       //   originalParent.appendChild(card);
       // }
-
     } else {
       console.error('Card element not found');
     }
@@ -133,7 +133,6 @@ const Category = ({ name, id }) => {
           <button id="addJob" onClick={openModal}>
             Add Job
           </button>
-          
         </div>
         <div className="category-header">
           <p>
