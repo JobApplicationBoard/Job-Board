@@ -10,6 +10,7 @@ const userRouter = require('./routes/userRouter');
 const dbRouter = require('./routes/dbRouter');
 
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 

@@ -4,21 +4,31 @@ const jobController = {};
 
 jobController.getOneJob = (req, res, next) => {
   const { id } = req.params;
+  const { userId } = req.cookies
+ 
+  // const query = `
+  //       SELECT *
+  //       FROM listings
+  //       WHERE listing_id = $1 
+  //       `;
   const query = `
-        SELECT *
-        FROM listings
-        WHERE listing_id = $1
-        `;
+          SELECT listings.*
+          FROM listings
+          LEFT JOIN categories 
+          ON categories.category_id = listings.category_id
+          WHERE listing_id = $1
+          AND user_id = $2
+  `
 
-  db.query(query, [id])
+  db.query(query, [id, userId])
     .then((result) => {
-      if (result.rows[0] === undefined){
-         return next({
-           log: 'Database returned nothing.Job id likely does not exist',
-           status: 400,
-           message: { err: 'Database returned nothing.' },
-         })
-      } 
+      if (result.rows[0] === undefined) {
+        return next({
+          log: 'Database returned nothing.',
+          status: 400,
+          message: { err: 'Database returned nothing.' },
+        })
+      }
       res.locals.getOneJob = result.rows[0];
       return next();
     })
@@ -32,12 +42,17 @@ jobController.getOneJob = (req, res, next) => {
 };
 
 jobController.getAllJobs = (req, res, next) => {
+  // const query = `
+  // SELECT listings.*,categories.*, users.user_id FROM listings
+  // INNER JOIN categories ON listings.category_id = categories.category_id
+  // INNER JOIN users ON categories.user_id = users.user_id
+  // `;
+  
   const query = `
   SELECT listings.*,categories.*, users.user_id FROM listings
   INNER JOIN categories ON listings.category_id = categories.category_id
   INNER JOIN users ON categories.user_id = users.user_id
   `;
-
   db.query(query)
     .then((result) => {
 
@@ -82,7 +97,7 @@ jobController.createJob = (req, res, next) => {
   // destructure what we need from req.body
   const { job_role_name, company_name, details, date_applied, category_id } =
     req.body;
-  
+
   const status = 'status'
   // put destructured content into a params array to be passed into .query method
   const params = [
@@ -114,7 +129,7 @@ jobController.createJob = (req, res, next) => {
 
 jobController.updateJob = (req, res, next) => {
   const { id } = req.params;
- 
+
   // below is our way of dealing with the fact that you dont
   // know how many update fields will be coming in
   // could be to update 1 field, could be to update 7 fields
@@ -128,9 +143,9 @@ jobController.updateJob = (req, res, next) => {
   for (const field of fields) {
     setFields.push(`${field[0]} = '${field[1]}'`);
   }
-   
-   console.log({setFields});
-   console.log('I am setFields.join' , setFields.join(', '));
+
+  console.log({ setFields });
+  console.log('I am setFields.join', setFields.join(', '));
   //turn setFields array into string for SQL query
   const query = `
   UPDATE listings
@@ -139,7 +154,7 @@ jobController.updateJob = (req, res, next) => {
   `;
   db.query(query, [id])
     .then((result) => {
-      console.log({result});
+      console.log({ result });
       return next();
     })
     .catch((err) => {
