@@ -17,8 +17,11 @@ import Login from './components/Login.jsx';
 
 
 const App = () => {
+<<<<<<< HEAD
   const [renderLogin, setRenderLogin] = useState(true);
   
+=======
+>>>>>>> dev
 
   return (
     <div>
