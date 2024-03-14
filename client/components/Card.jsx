@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 
 // Job details passed in from Category.jsx:
 const Card = (props) => {
-  return <div className="card">{props.jobname}</div>;
+  return <div className="card" draggable="true">{props.jobname}</div>;
 };
 
 export default Card;

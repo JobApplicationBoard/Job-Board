@@ -42,7 +42,7 @@ const boardReducer = (state = initialState, action) => {
       });
 
       const catArray = Array.from(catSet);
-      console.log('This is ADD_TO_STATE', catArray);
+      // console.log('This is ADD_TO_STATE', catArray);
 
       return {
         ...state,
