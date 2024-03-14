@@ -38,8 +38,30 @@ const Board = () => {
   console.log('categories in board.jsx: ', categories);
 
   const categoryData = categories.map((category, index) => {
+    // functions for dragging
+    function dragStart(event) {
+      event.dataTransfer.setData('Text', event.target.id);
+      document.getElementById('demo').innerHTML =
+        'Started to drag the p element';
+    }
+
+    function dragEnd(event) {
+      document.getElementById('demo').innerHTML =
+        'Finished dragging the p element.';
+    }
+
+
+
+    // returning Category
     return (
-      <Category name={category.category_name} id={category._id} key={index} />
+      // Category = drop target
+      <Category
+        name={category.category_name}
+        id={category._id}
+        key={index}
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      />
     );
   });
 
@@ -73,16 +95,18 @@ const Board = () => {
 
   return (
     <div>
-      <h3>AxoBoard</h3>
+      {/* input-container */}
       <div className="category-input-container">
-        <div className="left-content"></div>
+        <div className="left-content">LEFT CONTENT</div>
         <div className="right-content">
-          {/* <form onSubmit={(event) => submitHandler(event)}>
+          RIGHT CONTENT
+          <form onSubmit={(event) => submitHandler(event)}>
             <input placeholder="Enter Category Name" type="text" />
             <button type="submit">Add Status</button>
-          </form> */}
+          </form>
         </div>
       </div>
+      {/* borad-container */}
       <div className="board-container">{categoryData}</div>
     </div>
   );

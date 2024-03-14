@@ -70,6 +70,26 @@ const Category = ({ name, id }) => {
     },
   };
 
+  // Dropping functions
+  function allowDrop(event) {
+    event.preventDefault();
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    const cardId = event.dataTransfer.getData('text/plain');
+    console.log('Card ID:', cardId);
+    const card = document.getElementById(cardId);
+
+    if (card) {
+      const clonedCard = card.cloneNode(true); // Clone the card node
+      event.target.appendChild(clonedCard); // Append the cloned card
+      card.parentNode.removeChild(card); // Remove the original card from where it was
+    } else {
+      console.error('Card element not found');
+    }
+  }
+
   return (
     <>
       <Modal isOpen={isOpen} style={customStyles} ariaHideApp={false}>
@@ -91,7 +111,7 @@ const Category = ({ name, id }) => {
           <button type="submit">Submit</button>
         </form>
       </Modal>
-      <div className="category">
+      <div className="category" onDrop={drop} onDragOver={allowDrop}>
         <div className="category-button">
           <button id="addJob" onClick={openModal}>
             Add Job
@@ -105,9 +125,9 @@ const Category = ({ name, id }) => {
         </div>
         {/* Displaying cards for each category */}
         <div>
-          <Card />
-          <Card />
-          <Card />
+          <Card id="card1" jobname="Job1" />
+          <Card id="card2" jobname="Job2" />
+          <Card id="card3" jobname="Job3" />
         </div>
       </div>
     </>
