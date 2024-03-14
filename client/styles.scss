@@ -13,7 +13,7 @@ body {
   background-size: cover; /* Ensures the background covers the entire page */
   background-position: center center; /* Centers the background image on the page */
   background-attachment: fixed; /* Prevents the background image from repeating */
-  margin: 0;
+  margin: 100px;
   padding: 0;
   color: $primary-color;
   font-family: 'Work Sans', sans-serif;
@@ -24,7 +24,8 @@ body {
   line-height: 1.6;
   box-sizing: border-box;
 
-  .head-title {
+  .head-title,
+  .head-sub {
     color: $accent-color;
     text-align: center;
   }
@@ -43,7 +44,7 @@ body {
     gap: 15px;
     height: 50vh;
     padding: 20px;
-    //color: $primary-color;
+    margin-top: 2rem;
 
     // Default
     grid-template-columns: repeat(2, 1fr);
@@ -89,9 +90,6 @@ body {
   flex-direction: row;
   align-items: center;
   width: 100%;
-
-  .left-content {
-  }
 
   .right-content {
     width: 100%;

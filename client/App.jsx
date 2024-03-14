@@ -19,9 +19,7 @@ const App = () => {
     <div>
       <header>
         <div class="title-container">
-          <h1 className="head-title" id="demo">
-            Axojobl - Navigate Your Career Waters
-          </h1>
+          <h1 className="head-title">Axojobl - Navigate Your Career Waters</h1>
         </div>
       </header>
       <div className="app-container">

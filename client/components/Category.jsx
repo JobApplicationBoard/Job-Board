@@ -75,6 +75,7 @@ const Category = ({ name, id }) => {
     event.preventDefault();
   }
 
+  // logic for card dnd
   function drop(event) {
     event.preventDefault();
     // Retreive the ID of the dragged card from dataTransfer object
@@ -100,6 +101,7 @@ const Category = ({ name, id }) => {
       //   const originalParent = card.parentNode;
       //   originalParent.appendChild(card);
       // }
+      
     } else {
       console.error('Card element not found');
     }
@@ -140,9 +142,7 @@ const Category = ({ name, id }) => {
         </div>
         {/* Displaying cards for each category */}
         <div>
-          <Card id="card1" jobname="Job1" />
-          <Card id="card2" jobname="Job2" />
-          <Card id="card3" jobname="Job3" />
+          <Card id="card" />
         </div>
       </div>
     </>

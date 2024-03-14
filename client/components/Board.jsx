@@ -38,17 +38,12 @@ const Board = () => {
   console.log('categories in board.jsx: ', categories);
 
   const categoryData = categories.map((category, index) => {
-    // functions for dragging
-    function dragStart(event) {
-      event.dataTransfer.setData('Text', event.target.id);
-      document.getElementById('demo').innerHTML =
-        'Started to drag the p element';
-    }
+    // dragStart and dragEnd for dragging
+    // function dragStart(event) {
+    //   event.dataTransfer.setData('Text', event.target.id);
+    // }
 
-    function dragEnd(event) {
-      document.getElementById('demo').innerHTML =
-        'Finished dragging the p element.';
-    }
+    // function dragEnd(event) {}
 
     // returning Category
     return (
@@ -95,9 +90,8 @@ const Board = () => {
     <div>
       {/* input-container */}
       <div className="category-input-container">
-        <div className="left-content">LEFT CONTENT</div>
+        <div className="left-content"></div>
         <div className="right-content">
-          RIGHT CONTENT
           <form onSubmit={(event) => submitHandler(event)}>
             <input placeholder="Enter Category Name" type="text" />
             <button type="submit">Add Category</button>

@@ -16,15 +16,15 @@ const Card = (props) => {
   function dragStart(event) {
     event.dataTransfer.setData('text/plain', event.target.id);
   }
-  function dragEnd(event) {
-    document.getElementById('demo').innerHTML = 'Finished dragging the card';
-  }
+  // function dragEnd(event) {
+  //   document.getElementById('demo').innerHTML = 'Finished dragging the card';
+  // }
   return (
     <div
       className="card"
       draggable="true"
       onDragStart={dragStart}
-      onDragEnd={dragEnd}
+      // onDragEnd={dragEnd}
       id={props.id}
     >
       {props.jobname}
