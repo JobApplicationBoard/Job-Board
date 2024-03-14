@@ -33,6 +33,8 @@ categoryController.getOneCategory = (req, res, next) => {
 
 categoryController.getAllCategory = (req, res, next) => {
   const { userId } = req.cookies;
+  // const userId = "2"
+
   const query = `
       SELECT * 
       FROM categories
@@ -54,9 +56,8 @@ categoryController.getAllCategory = (req, res, next) => {
 };
 
 categoryController.createCategory = (req, res, next) => {
-  const { user_id, category_name } = req.body;
-  console.log(user_id);
-  console.log(category_name);
+  const { category_name } = req.body;
+  const user_id = req.cookies.userId;
   if (!user_id || !category_name) {
     return next({
       log: `Error creating category`,

@@ -99,9 +99,7 @@ const Category = ({ name, id }) => {
           <p>
             <strong>{name}</strong>
           </p>
-          <p>
-            <strong>{id}</strong>
-          </p>
+          <p>Category id: {id}</p>
         </div>
         <div>
           <Card />
