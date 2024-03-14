@@ -32,9 +32,10 @@ categoryController.getOneCategory = (req, res, next) => {
 };
 
 categoryController.getAllCategory = (req, res, next) => {
-   
-  const { userId }  = "2"
+
   // const { userId } = req.cookies
+  const userId = "2"
+
   const query = `
       SELECT * 
       FROM categories
@@ -74,7 +75,7 @@ categoryController.createCategory = (req, res, next) => {
 
   db.query(query, params)
     .then((result) => {
-      res.locals.category_id = result.rows[0].category_id;
+      res.locals.category_id = result.rows[0].category_id
       return next();
     })
     .catch((err) => {
@@ -144,6 +145,7 @@ categoryController.deleteCategory = (req, res, next) => {
       });
     });
 };
+
 
 
 module.exports = categoryController;
