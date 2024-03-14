@@ -12,8 +12,6 @@ const Category = ({ name, id }) => {
   const [jobData, setJobData] = useState([]);
 
   function openModal(e) {
-    console.log("id: ", id);
-    console.log("name: ", name);
 
     e.preventDefault();
     setIsOpen(true);
@@ -86,7 +84,6 @@ const Category = ({ name, id }) => {
          }
          if (response.ok) {
            let jobDataResponse = await response.json();
-           console.log("this is job data", jobDataResponse);
            setJobData(jobDataResponse);
            return jobData;
          }

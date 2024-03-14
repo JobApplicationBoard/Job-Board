@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const Card = ({ jobData }) => {
-  console.log("jobData in cards", jobData);
   const { job_role_name, company_name, details, date_applied } = jobData;
 
   return (
