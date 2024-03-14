@@ -44,7 +44,6 @@ module.exports = {
     },
     port: 8080,
     historyApiFallback: true,
-    proxy: [{ context: ["/api"], target: "http://localhost:3000" }],
+    proxy: [{ context: ["/api", "/user"], target: "http://localhost:3000" }],
   },
 };
-

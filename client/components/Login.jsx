@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Login = () => {
+const Login = ({ setRenderLogin }) => {
   // declare state for object with username & password in it
   const [input, setInput] = useState({
     username: '',
@@ -8,11 +8,28 @@ const Login = () => {
   });
 
   // Handle submission of the event
-  const handleSubmitEvent = (e) => {
-    // Prevents page refresh
-    e.preventDefault();
-    // dispatch some sort of action
-    console.log('Username and password is ', input);
+  const handleSubmitEvent = async (e) => {
+    try {
+      // Prevents page refresh
+      e.preventDefault();
+      // fetch request to /user/login
+      let response = await fetch('/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(input),
+      });
+
+      // User now has a cookie with userId, lets redirect
+      if(response.status === 200) setRenderLogin(false);
+      
+    } catch (err) {
+      console.log(
+        'Error when submitting in login component. Error is: ',
+        err
+      );
+    }
   };
 
   // Handle typing in the form boxes
