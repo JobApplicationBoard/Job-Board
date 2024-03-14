@@ -32,7 +32,7 @@ const Board = () => {
     }
 
     fetchAll();
-  }, []);
+  }, [catId]);
 
   const categories = useSelector((state) => state.board.categories);
   console.log('categories in board.jsx: ', categories);
@@ -83,7 +83,7 @@ const Board = () => {
         }),
       });
 
-      const data = 10;
+      const data = Math.floor(Math.random() * 1000);
       setCatId(data);
       dispatch(deleteCategoryActionCreator(data));
     } catch (error) {
