@@ -52,13 +52,13 @@ const boardReducer = (state = initialState, action) => {
       break;
 
     /**
-     * Adds a new card to state after interacting with the 'Add Status' form in Board component
+     * Adds a new card to state after interacting with the 'Add Category' form in Board component
      * Does not handle SQL query, instead allows React component to fetch
      */
 
-    case types.ADD_STATUS:
+    case types.ADD_CATEGORY:
       const { categoryName, _id } = action.payload; // RETURN from SQL query to populate
-      // console.log('In ADD_STATUS: name, id ', categoryName, _id);
+      // console.log('In ADD_CATEGORY: name, id ', categoryName, _id);
       return {
         ...state,
         categories: [...state.categories, { category_name: categoryName, _id }],

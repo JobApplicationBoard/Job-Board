@@ -77,14 +77,29 @@ const Category = ({ name, id }) => {
 
   function drop(event) {
     event.preventDefault();
+    // Retreive the ID of the dragged card from dataTransfer object
     const cardId = event.dataTransfer.getData('text/plain');
-    console.log('Card ID:', cardId);
+    // Retreive the dragged card element
     const card = document.getElementById(cardId);
 
+    // Check if the card exists
     if (card) {
-      const clonedCard = card.cloneNode(true); // Clone the card node
-      event.target.appendChild(clonedCard); // Append the cloned card
-      card.parentNode.removeChild(card); // Remove the original card from where it was
+      // Create a copy of the card
+      const newCard = card.cloneNode(true);
+      event.target.appendChild(newCard);
+      card.parentNode.removeChild(card);
+
+      // // Check if the card is dropped in the valid zone, 'category'
+      // if (event.target.classList.contains('category')) {
+      //   // Append the cloned card
+      //   event.target.appendChild(newCard);
+      //   // Remove the original card from where it was
+      //   card.parentNode.removeChild(card);
+      // } else {
+      //   // If the card is dropped at a invlid location, restore the original card
+      //   const originalParent = card.parentNode;
+      //   originalParent.appendChild(card);
+      // }
     } else {
       console.error('Card element not found');
     }

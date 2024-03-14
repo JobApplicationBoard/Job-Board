@@ -50,8 +50,6 @@ const Board = () => {
         'Finished dragging the p element.';
     }
 
-
-
     // returning Category
     return (
       // Category = drop target
@@ -102,7 +100,7 @@ const Board = () => {
           RIGHT CONTENT
           <form onSubmit={(event) => submitHandler(event)}>
             <input placeholder="Enter Category Name" type="text" />
-            <button type="submit">Add Status</button>
+            <button type="submit">Add Category</button>
           </form>
         </div>
       </div>

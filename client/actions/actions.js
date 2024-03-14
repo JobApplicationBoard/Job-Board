@@ -36,7 +36,7 @@ export const updateCardActionCreator = (cardId) => ({
 });
 
 export const addCategoryActionCreator = (categoryName, _id) => ({
-  type: types.ADD_STATUS,
+  type: types.ADD_CATEGORY,
   payload: { categoryName, _id },
 });
 
