@@ -4,7 +4,7 @@
 
 // Import modules necessary for tests
 import React from "react";
-import { render, screen } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom'
 
 // Import component & redux store
@@ -33,8 +33,9 @@ describe('Unit testing Login component', () => {
     });
 
     // has a button that says log in
-    it('Has a button that says Log In', () => {
-      expect(form.getByRole('button')).toHaveTextContent('Log In');
+    it('Has a button that says Create Account and a button that says Log In', () => {
+      expect(form.getByRole('button', { name: /log in/i })).toBeInTheDocument();
+      expect(form.getByRole('button', { name: /Create Account/i })).toBeInTheDocument();
     });
   })
 

@@ -9,13 +9,16 @@
  * ************************************
  */
 
-import React from 'react';
-import Board from '../client/components/Board.jsx';
-// Testing of Draggable and Droppable
+import React, {useState} from 'react';
 
-// Original Board
+import Board from '../client/components/Board.jsx';
+import Login from './components/Login.jsx';
+
+
 
 const App = () => {
+  const [renderLogin, setRenderLogin] = useState(true);
+  
 
   return (
     <div>
@@ -26,7 +29,7 @@ const App = () => {
         </div>
       </header>
       <div className="app-container">
-        <Board />
+        { renderLogin ? <Login setRenderLogin={setRenderLogin}/> : <Board /> }
       </div>
     </div>
   );
