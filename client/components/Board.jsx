@@ -54,7 +54,7 @@ const Board = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          /* ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ WHERE USER_ID IS HARD-CODED TO 2 ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ */
+          /* ⬇️ WHERE USER_ID IS HARD-CODED TO 2 ⬇ */
           user_id: 2,
           category_name: event.target[0].value,
         }),
@@ -77,10 +77,10 @@ const Board = () => {
       <div className="category-input-container">
         <div className="left-content"></div>
         <div className="right-content">
-          <form onSubmit={(event) => submitHandler(event)}>
+          {/* <form onSubmit={(event) => submitHandler(event)}>
             <input placeholder="Enter Category Name" type="text" />
             <button type="submit">Add Status</button>
-          </form>
+          </form> */}
         </div>
       </div>
       <div className="board-container">{categoryData}</div>
