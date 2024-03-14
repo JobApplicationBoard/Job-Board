@@ -4,7 +4,7 @@ const jobController = {};
 
 jobController.getOneJob = (req, res, next) => {
   const { id } = req.params;
-  const { userId } = req.cookies
+  const { userId } = req.cookies;
  
   // const query = `
   //       SELECT *
@@ -42,18 +42,15 @@ jobController.getOneJob = (req, res, next) => {
 };
 
 jobController.getAllJobs = (req, res, next) => {
-  // const query = `
-  // SELECT listings.*,categories.*, users.user_id FROM listings
-  // INNER JOIN categories ON listings.category_id = categories.category_id
-  // INNER JOIN users ON categories.user_id = users.user_id
-  // `;
   
+  const { userId } = req.cookies;
   const query = `
   SELECT listings.*,categories.*, users.user_id FROM listings
   INNER JOIN categories ON listings.category_id = categories.category_id
   INNER JOIN users ON categories.user_id = users.user_id
+  WHERE users.user_id = $1
   `;
-  db.query(query)
+  db.query(query, [userId])
     .then((result) => {
 
       res.locals.getAllJobs = result.rows;
@@ -68,30 +65,6 @@ jobController.getAllJobs = (req, res, next) => {
     });
 };
 
-jobController.getAllUserJobs = (req, res, next) => {
-  const { id } = req.params;
-
-  const query = `
-  SELECT listings.*,categories.*, users.user_id FROM listings
-  INNER JOIN categories ON listings.category_id = categories.category_id
-  INNER JOIN users ON categories.user_id = users.user_id
-  WHERE users.user_id = $1
-  `;
-
-  db.query(query, [id])
-    .then((result) => {
-
-      res.locals.getAllUserJobs = result.rows;
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: `Error retrieving jobs from database ${err}`,
-        status: 400,
-        message: { err: 'An error occurred' },
-      });
-    });
-};
 
 jobController.createJob = (req, res, next) => {
   // destructure what we need from req.body
