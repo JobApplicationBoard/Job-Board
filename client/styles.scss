@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 // Variables
 $primary-color: rgb(33, 37, 41);
@@ -9,14 +9,14 @@ $background-color: #f0f2f5;
 
 body {
   // font: $font-stack;
-  background-image: url('https://img.freepik.com/free-vector/white-abstract-wallpaper_23-2148830026.jpg');
+  background-image: url("https://img.freepik.com/free-vector/white-abstract-wallpaper_23-2148830026.jpg");
   background-size: cover; /* Ensures the background covers the entire page */
   background-position: center center; /* Centers the background image on the page */
   background-attachment: fixed; /* Prevents the background image from repeating */
   margin: 0;
   padding: 0;
   color: $primary-color;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
   font-style: normal;
@@ -76,9 +76,9 @@ body {
       padding: 15px;
       background: linear-gradient(145deg, #ffffff, #f0f2f5);
       box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow  0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       &:hover {
-;        transform: translateY(-5px);
+        transform: translateY(-5px);
         box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
       }
     }
@@ -152,4 +152,7 @@ body {
 #loginButtonsContainer button {
   width: 45%;
   margin-top: 1em;
+}
+.bold {
+  font-weight: 400;
 }

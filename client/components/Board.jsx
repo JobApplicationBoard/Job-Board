@@ -35,10 +35,9 @@ const Board = () => {
   }, [catId]);
 
   const categories = useSelector((state) => state.board.categories);
-  console.log('categories in board.jsx: ', categories);
-
   const categoryData = categories.map((category, index) => {
     return (
+
       <Category name={category.category_name} id={category._id} key={index} />
     );
   });
@@ -103,7 +102,7 @@ const Board = () => {
             <button type='submit'>Add Category</button>
           </form>
           <form onSubmit={(event) => deleteHandler(event)}>
-            <input placeholder='Enter Category Name' type='text' />
+            <input placeholder='Enter Category ID' type='text' />
             <button type='submit'>Delete Category</button>
           </form>
         </div>
