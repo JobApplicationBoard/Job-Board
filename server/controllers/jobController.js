@@ -33,8 +33,8 @@ jobController.getOneJob = (req, res, next) => {
 
 jobController.getAllJobs = (req, res, next) => {
 
-  // const { userId } = req.cookies;
-  const userId = "2";
+  const { userId } = req.cookies;
+  // const userId = "2";
   const query = `
   SELECT listings.*,categories.*, users.user_id FROM listings
   INNER JOIN categories ON listings.category_id = categories.category_id
