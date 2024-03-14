@@ -126,6 +126,7 @@ const Category = ({ name, id }) => {
           <p>
             <strong>{name}</strong>
           </p>
+          <p>Category id: {id}</p>
         </div>
         <div>
           {jobArray}

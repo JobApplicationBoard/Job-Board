@@ -72,7 +72,8 @@ const Board = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('/api/category', {
+      //const id = catid
+      const response = await fetch(`/api/category/${event.target[0].value}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
